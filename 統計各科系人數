@@ -1,0 +1,32 @@
+const { MongoClient } = require('mongodb');
+
+async function countStudentsByDepartment() {
+    const client = new MongoClient('mongodb://localhost:27017');
+    try {
+        await client.connect();
+        console.log("成功連接到 MongoDB");
+
+        const db = client.db('160082');
+        const collection = db.collection('studentslist');
+
+        // 使用聚合管道統計每個科系的人數
+        const result = await collection.aggregate([
+            {
+                $group: {
+                    _id: "$院系",   // 按科系分組
+                    count: { $sum: 1 }  // 計算每個科系的學生數量
+                }
+            }
+        ]).toArray();
+
+        console.log("各科系人數統計：");
+        console.table(result);  // 顯示科系及對應人數
+
+    } catch (error) {
+        console.error("發生錯誤：", error);
+    } finally {
+        await client.close();
+    }
+}
+
+countStudentsByDepartment();
