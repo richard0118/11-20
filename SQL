@@ -1,0 +1,21 @@
+-- 建立資料庫
+CREATE DATABASE IF NOT EXISTS school;
+
+-- 使用資料庫
+USE school;
+
+-- 建立 studentslist 表格
+CREATE TABLE studentslist (
+    id INT AUTO_INCREMENT PRIMARY KEY,  -- 學生ID
+    name VARCHAR(100) NOT NULL,          -- 學生姓名
+    department VARCHAR(100) NOT NULL     -- 學生科系
+);
+
+-- 插入範例資料
+INSERT INTO studentslist (name, department)
+VALUES
+('John Doe', 'Computer Science'),
+('Jane Smith', 'Mathematics'),
+('Alice Brown', 'Computer Science'),
+('Bob White', 'Physics'),
+('Charlie Black', 'Mathematics');
