@@ -1,0 +1,25 @@
+const { MongoClient } = require('mongodb');
+
+async function showAllStudents() {
+    const client = new MongoClient('mongodb://localhost:27017');
+    try {
+        await client.connect();
+        console.log("成功連接到 MongoDB");
+
+        const db = client.db('160082');
+        const collection = db.collection('studentslist');
+
+        // 查詢所有學生資料
+        const students = await collection.find({}).toArray();
+
+        console.log("所有學生資料：");
+        console.table(students);  // 顯示學生資料
+
+    } catch (error) {
+        console.error("發生錯誤：", error);
+    } finally {
+        await client.close();
+    }
+}
+
+showAllStudents();
